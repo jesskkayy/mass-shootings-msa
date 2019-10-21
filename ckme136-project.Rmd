@@ -1,0 +1,85 @@
+---
+title: "CKME136-Data-Description"
+author: "Jessica Kurilenko"
+date: "October 18, 2019"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+#msa=read.csv("/Users/jessica/Desktop/mass-shootings-msa.csv")
+
+msa = read.csv("F:/mass-shootings-msa.csv")
+
+##find the mean and box plot distribution of average age of shooter
+
+average_age = mean(msa$Average.Shooter.Age, na.rm=TRUE)
+
+boxplot(msa$Average.Shooter.Age)
+
+```
+
+```{r}
+
+#find distribution of proportion of males and females 
+
+sex = msa$Shooter.Sex...Coded
+
+table(sex)
+
+prop.table(table(sex))
+
+hist(sex)
+
+```
+
+```{r}
+
+# find distribution of race of shooter
+
+table(msa$Shooter.Race...Simple)
+barplot(table(msa$Shooter.Race...Simple))
+
+```
+```{r}
+
+#find distribution of state
+
+df <- as.data.frame(table(msa$State))
+names(df) <- c("State", "Count")
+plot(df)
+
+```
+
+```{r}
+#test <- msa[c(6)]
+#cor(msa[c(6)],msa[c(14)])
+
+test <- as.data.frame(msa[c(6,14,17,29,31)])
+cor(test)
+round(cor(test),2)
+
+```
+```{r}
+
+race <- as.numeric(unlist(msa[c(16)]))
+MI <- as.numeric(unlist(msa[c(26)]))
+
+tbl <- matrix(race,MI)
+
+chi_res <- chisq.test(tbl)
+chi_res
+```
+
+
